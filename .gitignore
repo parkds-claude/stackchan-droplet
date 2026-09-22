@@ -1,0 +1,4 @@
+*.ppm
+*.bin
+/build/
+.DS_Store

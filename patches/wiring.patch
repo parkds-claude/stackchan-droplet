@@ -1,0 +1,55 @@
+diff --git a/firmware/main/apps/app_launcher/app_launcher.cpp b/firmware/main/apps/app_launcher/app_launcher.cpp
+index e1e3d20..53fbf71 100644
+--- a/firmware/main/apps/app_launcher/app_launcher.cpp
++++ b/firmware/main/apps/app_launcher/app_launcher.cpp
+@@ -84,7 +84,7 @@ void AppLauncher::screensaver_update()
+     uint32_t idle_time = lv_display_get_inactive_time(NULL);
+     if (idle_time >= SCREENSAVER_TIMEOUT_MS) {
+         if (!_screensaver) {
+-            _screensaver = std::make_unique<view::Screensaver>();
++            _screensaver = std::make_unique<droplet::DropletScene>();
+             _screensaver->init();
+         }
+     } else if (_screensaver) {
+diff --git a/firmware/main/apps/app_launcher/app_launcher.h b/firmware/main/apps/app_launcher/app_launcher.h
+index c62cca7..a8472b5 100644
+--- a/firmware/main/apps/app_launcher/app_launcher.h
++++ b/firmware/main/apps/app_launcher/app_launcher.h
+@@ -5,6 +5,7 @@
+  */
+ #pragma once
+ #include "view/view.h"
++#include <apps/app_droplet/droplet_scene.h>
+ #include <apps/app_setup/workers/workers.h>
+ #include <mooncake.h>
+ #include <mooncake_templates.h>
+@@ -21,7 +22,7 @@ public:
+ 
+ private:
+     std::unique_ptr<view::LauncherView> _view;
+-    std::unique_ptr<view::Screensaver> _screensaver;
++    std::unique_ptr<droplet::DropletScene> _screensaver;   // 유휴 30초 → 물방울 (구 DVD 로고 대체)
+     std::unique_ptr<setup_workers::StartupWorker> _startup_worker;
+     uint32_t _screensaver_timecount = 0;
+     bool _startup_checked           = false;
+diff --git a/firmware/main/apps/apps.h b/firmware/main/apps/apps.h
+index 77cc9b7..35f6f21 100644
+--- a/firmware/main/apps/apps.h
++++ b/firmware/main/apps/apps.h
+@@ -12,3 +12,4 @@
+ #include "app_app_center/app_app_center.h"
+ #include "app_ezdata/app_ezdata.h"
+ #include "app_dance/app_dance.h"
++#include "app_droplet/app_droplet.h"
+diff --git a/firmware/main/main.cpp b/firmware/main/main.cpp
+index 3f11ed6..9e05bc3 100644
+--- a/firmware/main/main.cpp
++++ b/firmware/main/main.cpp
+@@ -38,6 +38,7 @@ extern "C" void app_main(void)
+         GetMooncake().installApp(std::make_unique<AppAppCenter>());
+         GetMooncake().installApp(std::make_unique<AppEzdata>());
+         GetMooncake().installApp(std::make_unique<AppDance>());
++        GetMooncake().installApp(std::make_unique<AppDroplet>());
+         GetMooncake().installApp(std::make_unique<AppSetup>());
+ 
+         // Main loop
