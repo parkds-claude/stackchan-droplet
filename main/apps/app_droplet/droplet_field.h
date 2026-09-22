@@ -1,7 +1,7 @@
 /*
  * DropletField — 소음 반응 물방울 필드 렌더러 v3 (두 스타일). ESP/LVGL 의존 없음(호스트 미리보기 가능).
  *
- * Style::Dots  — 2호기(StackDeck) 룩: 16×12 도트(반지름 3~11)가 필렛 목으로 캡슐처럼 이어짐.
+ * Style::Dots  — 도트 매트릭스 룩: 16×12 도트(반지름 3~11)가 필렛 목으로 캡슐처럼 이어짐.
  *                픽셀 단위 부호거리장(SDF: 원 ∪ 필렛 목)으로 그려 안티에일리어싱된 고화질.
  * Style::Blob  — 액체 룩: 12×9 격자, 유한 지지 메타볼 커널 합 → 부드럽게 녹아 합쳐짐.
  * 색: 주황-레드 계열(작은 방울 깊은 레드 → 큰 방울 주황·살구), 색상은 그 범위에서 천천히 흔들림. 소음이 크면 밝아진다.
@@ -19,7 +19,7 @@ constexpr int NMAX = 16 * 12;
 
 enum class Style : uint8_t { Blob = 0, Dots = 1 };
 
-// 소음 → 레벨 (StackDeck dots.py 와 동일 규격)
+// 소음 → 레벨 (적응형 노이즈 플로어)
 constexpr float ENV_ATTACK    = 0.55f;
 constexpr float ENV_RELEASE   = 0.08f;
 constexpr float FLOOR_RISE    = 0.010f;

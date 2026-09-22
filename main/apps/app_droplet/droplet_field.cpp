@@ -22,7 +22,7 @@ static constexpr int   KLUT_N = 4096;
 static uint16_t s_klut[KLUT_N + 1];
 static bool     s_klut_ready = false;
 static const float K_GAIN = 1.0f / ((1.0f - 1.0f / (REACH * REACH)) * (1.0f - 1.0f / (REACH * REACH)));
-// Dots 필렛 목 (StackDeck dots.py 와 동일 규격)
+// Dots 필렛 목
 static constexpr float FILLET_R = 8.0f;
 static constexpr float NECK_MIN = 3.0f;
 
@@ -132,7 +132,7 @@ void DropletField::_update_field()
         for (int i = 0; i < _cols; ++i, ++idx) {
             float v;
             if (_style == Style::Dots) {
-                // StackDeck dots.py 와 동일한 필드
+                // 도트 매트릭스 필드
                 v = 0.5f + 0.25f * std::sin(0.9f * i + 1.3f * t) * std::cos(0.7f * j - 0.8f * t)
                          + 0.25f * std::sin(0.5f * (i + j) + 0.6f * t);
             } else {
